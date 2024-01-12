@@ -1,5 +1,6 @@
 <h1>Listagem dos suportes</h1>
 
+<a href="{{ route('supports.create') }}">Criar dúvida</a>
 <table>
     <thead>
         <th>assunto</th>
@@ -15,6 +16,7 @@
         <td>{{ $support->body }}</td>
         <td>
             <a href="{{ route('supports.show', $support->id) }}">Ir</a>
+            <a href="{{ route('supports.edit', $support->id) }}">Editar</a>
         </td>
     </tr>
         @endforeach
