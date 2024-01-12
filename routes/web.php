@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/supports', [SupportController::class, 'store'])->name('supports.store');
+Route::post('/support', [SupportController::class, 'store'])->name('supports.store');
 
 Route::get('/supports/create', [SupportController::class, 'create'])->name('supports.create');
 
