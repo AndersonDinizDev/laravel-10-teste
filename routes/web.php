@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\{ForumController};
 use App\Http\Controllers\Site\SiteController;
+use App\Http\Controllers\Admin\SupportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
+Route::get('/supports', [SupportController::class, 'index'])->name('forum.index');
 
 Route::get('/contact', [SiteController::class, 'contact']);
 
