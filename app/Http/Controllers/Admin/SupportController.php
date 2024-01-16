@@ -9,63 +9,56 @@ use Illuminate\Http\Request;
 
 class SupportController extends Controller
 {
-    public function index(Support $support) {
+    public function index(Support $support)
+    {
         $supports = $support->all();
-        return view('admin/supports/index', compact('supports'));
+        return response()->json($supports);
     }
 
-    public function show(string|int $id) {
-        // Support::find($id);
-        // Support::where('id', '$id')->first();
-        // Support::where('id', '!=', '$id')->first();
-        if(!$support = Support::find($id)) {
-            return back();
+    public function show(string | int $id)
+    {
+        $support = Support::find($id);
+
+        if (!$support) {
+            return response()->json(['error' => 'Support not found'], 404);
         }
-        return view('admin/supports/show', compact('support'));
+
+        return response()->json($support);
     }
 
-    public function create() {
-        return view('admin/supports/create');
-    }
-
-    public function store(StoreUpdateSupport $request, Support $support) {
+    public function store(StoreUpdateSupport $request, Support $support)
+    {
         $data = $request->validated();
         $data['status'] = 'a';
 
         $support = $support->create($data);
 
-        return redirect()->route('supports.index');
+        return response()->json($support, 201); // 201 Created
     }
 
-    public function edit(Support $support, string|int $id) {
-        if(!$support = $support->where('id', $id)->first()) {
-            return back();
+    public function update(StoreUpdateSupport $request, Support $support, string $id)
+    {
+        $support = Support::find($id);
+
+        if (!$support) {
+            return response()->json(['error' => 'Support not found'], 404);
         }
-
-        return view('admin/supports.edit', compact('support'));
-    }
-
-    public function update(StoreUpdateSupport $request, Support $support, string $id) {
-        if(!$support = Support::find($id)) {
-            return back();
-        }
-
-        // $support->subject = $request->subject;
-        // $support->subject = $request->body;
-        // $support->save();
 
         $support->update($request->validated());
 
-        return redirect()->route('supports.index');
+        return response()->json($support);
     }
 
-    public function destroy(string | int $id) {
-        if(!$support = Support::find($id)) {
-            return back();
+    public function destroy(string | int $id)
+    {
+        $support = Support::find($id);
+
+        if (!$support) {
+            return response()->json(['error' => 'Support not found'], 404);
         }
 
         $support->delete();
 
-        return redirect()->route('supports.index');
+        return response()->json(['message' => 'Support deleted']);
     }
 }
